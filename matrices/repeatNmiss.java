@@ -24,4 +24,5 @@ public class repeatNmiss {
         }
 
         return res;
+    }
 }

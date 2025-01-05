@@ -39,13 +39,4 @@ public class relativeSortArr {
         
         return arr1;
     }
-
-    public static void main(String[] args) {
-        int[] arr1 = {2,3,1,3,2,4,6,7,9,2,19}, arr2 = {2,1,4,3,9,6};
-        System.out.println(arr1.length);
-        System.out.println(arr2.length);
-        // relativeSortArray(arr1, arr2);
-        System.out.println(Arrays.toString(relativeSortArray(arr1, arr2)));
-        // relativeSortArray(arr1, arr2);
-    }
 }

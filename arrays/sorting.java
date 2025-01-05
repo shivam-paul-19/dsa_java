@@ -82,12 +82,45 @@ public class sorting {
         quickSortUtil(arr, 0, arr.length-1);
     }
 
-    public static void main(String[] args) {
-        int[] arr = {3,2,5,6,1,9,4,8};
-        // System.out.println(Arrays.toString(bubbleSort(arr)));
-        // System.out.println(Arrays.toString(selectionSort(arr)));
-        // System.out.println(Arrays.toString(insertionSort(arr)));
-        quickSort(arr);
-        System.out.println(Arrays.toString(arr));
+    //Merge sort
+    public static void merge(int[] arr, int si, int m, int ei) {
+        int[] temp = new int[ei-si+1];
+        int k = 0, i = si, j = m+1;
+        while(i<=m && j<=ei) {
+            if(arr[i] <= arr[j]) {
+                temp[k++] = arr[i++]; 
+            } else {
+                temp[k++] = arr[j++];
+            }
+        }
+
+        while(i<=m) {
+            temp[k++] = arr[i++];
+        }
+
+        while(j<=ei) {
+            temp[k++] = arr[j++];
+        }
+
+        for(i=si, k=0; k<temp.length; i++, k++) {
+            arr[i] = temp[k];
+        }
+    }
+
+    public static void mergeSortUtil(int[] arr, int si, int ei) {
+        if(si>=ei) {
+            return;
+        }
+
+        int mid = (si+ei)/2;
+        mergeSortUtil(arr, si, mid);
+        mergeSortUtil(arr, mid+1, ei);
+
+        merge(arr, si, mid, ei);
+    }
+
+    public static int[] mergeSort(int[] nums) {
+        mergeSortUtil(nums, 0, nums.length-1);
+        return nums;
     }
 }

@@ -127,9 +127,44 @@ public class main {
         return --i;
     }
 
+    public static int minSetSize(int[] arr) {
+        ArrayList<Integer> list = new ArrayList<>();
+        int count = 1;
+        Arrays.sort(arr);
+        for(int i=1; i<arr.length; i++) {
+            if(arr[i] == arr[i-1]) {
+                count++;
+            } else {
+                list.add(count);
+                count = 1;
+            }
+        }
+
+        list.add(count);
+        int[] temp = new int[list.size()];
+
+        for(int i=0; i<temp.length; i++) {
+            temp[i] = list.get(i);
+        }
+
+        Arrays.sort(temp);
+        int target = arr.length/2;
+        int total = arr.length;
+        int res = 0;
+        for(int i=temp.length-1; i>=0; i--) {
+            total -= temp[i];
+            res++;
+            if(total <= target) {
+                return res;
+            }
+        }
+        return res;
+    }
+
     public static void main(String[] args) {
-        int[] arr = {7,6,4,3,1};
-        System.out.println(nthUglyNumber(1352));
+        int[] arr = {2,21,43,38,0,42,33,7,24,13,12,27,12,24,5,23,29,48,30,31};
+        int[] arr2 = {7,7,7,7,7,7};
+        System.out.println(minSetSize(arr2));
     }
 }
 
