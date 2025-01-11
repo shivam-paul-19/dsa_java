@@ -36,135 +36,39 @@ public class main {
     //     System.out.println("Null");
     // }
 
-    public static int[] twoSum(int[] nums, int target) {
-        HashMap <Integer, Integer> map = new HashMap<>();
-        int newArr[] = new int[nums.length];
-        newArr = nums;
-        int res[] = new int[2];
-        int s = 0, e = nums.length-1;
-        Arrays.sort(nums);
-        while(e > s) {
-            if(nums[s] + nums[e] == target) {
-                res[0] = map.get(nums[s]);
-                res[1] = map.get(nums[e]);
-                break;
-            } else if(nums[s] + nums[e] > target) {
-                e--;
-            } else {
-                s++;
-            }
+
+
+    public static boolean isExists(char[][] board, int i, int j, int idx, String word) {
+        if(i<0 || j<0 || i>=board.length || j>=board[0].length || board[i][j] == '*' || board[i][j] != word.charAt(idx)) {
+            return false;
         }
+
+        if(word.length() - 1 == idx) {
+            return true;
+        }
+
+        char t = board[i][j];
+        board[i][j] = '*';
+        boolean res = isExists(board, i+1, j, idx+1, word) || isExists(board, i-1, j, idx+1, word) || isExists(board, i, j+1, idx+1, word) || isExists(board, i, j-1, idx+1, word);
+        board[i][j] = t;
         return res;
     }
 
-    public static int[] singleNumber(int[] nums) {
-        if(nums.length == 2) {
-            return nums;
-        }
-
-        int[] res = new int[2];
-        int flag = 0;
-
-        Arrays.sort(nums);
-
-        if(nums[0] != nums[1]) {
-            res[flag++] = nums[0];
-        }
-
-        for(int i=1; i<nums.length-1; i++) {
-            if(nums[i-1] != nums[i] && nums[i] != nums[i+1]) {
-                res[flag++] = nums[i];
+    public static boolean exist(char[][] board, String word) {
+        for(int i=0; i<board.length; i++) {
+            for(int j=0; j<board[0].length; j++) {
+                if(word.charAt(0) == board[i][j] && isExists(board, i, j, 0, word)) {
+                    return true;
+                } 
             }
         }
 
-        if(flag != 2) {
-            res[flag++] = nums[nums.length-1];
-        }
-
-        return res;
-    }
-
-    public static int maxProfit(int[] prices) {
-        int min = prices[0];
-        int maxProfit = 0;
-        for(int i=1; i<prices.length; i++) {
-            if(prices[i] < min) {
-                min = prices[i];
-            } else {
-                int profit = prices[i] - min;
-                maxProfit = (profit > maxProfit) ? profit : maxProfit;
-            }
-        }
-
-        return maxProfit;
-    }
-
-    public static boolean isUgly(int n) {
-        while(n > 1) {
-            if(n%5 == 0) {
-                n /= 5;
-            } else if (n%3 == 0) {
-                n /= 3;
-            } else if (n%2 == 0) {
-                n /= 2;
-            } else {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public static int nthUglyNumber(int n) {
-        int i=1, j=1;
-        while(j<=n) {
-            if(isUgly(i)) {
-                j++;
-            }
-            i++;
-        }
-
-        return --i;
-    }
-
-    public static int minSetSize(int[] arr) {
-        ArrayList<Integer> list = new ArrayList<>();
-        int count = 1;
-        Arrays.sort(arr);
-        for(int i=1; i<arr.length; i++) {
-            if(arr[i] == arr[i-1]) {
-                count++;
-            } else {
-                list.add(count);
-                count = 1;
-            }
-        }
-
-        list.add(count);
-        int[] temp = new int[list.size()];
-
-        for(int i=0; i<temp.length; i++) {
-            temp[i] = list.get(i);
-        }
-
-        Arrays.sort(temp);
-        int target = arr.length/2;
-        int total = arr.length;
-        int res = 0;
-        for(int i=temp.length-1; i>=0; i--) {
-            total -= temp[i];
-            res++;
-            if(total <= target) {
-                return res;
-            }
-        }
-        return res;
+        return false;
     }
 
     public static void main(String[] args) {
-        int[] arr = {2,21,43,38,0,42,33,7,24,13,12,27,12,24,5,23,29,48,30,31};
-        int[] arr2 = {7,7,7,7,7,7};
-        System.out.println(minSetSize(arr2));
+        char[][] word = {{'A','B','C','E'}, {'S','F','C','S'}, {'A','D','E','E'}};
+        System.out.println(exist(word, "ABCCED"));
     }
 }
 
