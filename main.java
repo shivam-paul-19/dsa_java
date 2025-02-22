@@ -66,12 +66,94 @@ public class main {
         return false;
     }
 
+    public static int maxAdjacentDistance(int[] nums) {
+        int max = Integer.MIN_VALUE;
+        for(int i=1; i<nums.length; i++) {
+            max = Math.max(max, Math.abs((nums[i]-nums[i-1])));
+        }
+
+        max = Math.max(max, Math.abs((nums[0]-nums[nums.length-1])));
+        return max;
+    }
+
+    public static long minCost(int[] arr, int[] brr, long k) {
+        if(Arrays.equals(arr, brr)) {
+            return 0;
+        }
+
+        long cost = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        List<Integer> list = new ArrayList<>();
+        for(int i=0; i<brr.length; i++) {
+            list.add(brr[i]);
+        }
+
+        for(int i=0; i<arr.length; i++) {
+            int min = Integer.MAX_VALUE;
+            int minIdx = 0;
+            for(int j=0; j<list.size(); j++) {
+                if(min > Math.abs(arr[i]-list.get(j))) {
+                    min = Math.abs(arr[i]-list.get(j));
+                    minIdx = j;
+                }
+            }
+
+            map.put(i, minIdx);
+            list.remove(minIdx);
+            cost += min;
+        }
+
+        for(int key: map.keySet()) {
+            if(key != map.get(key)) {
+                cost += k;
+                break;
+            }
+        }
+
+        return cost;
+    }
+
+    public static int removeDuplicates(int[] nums) {
+        int[] newNums = new int[nums.length];
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        newNums = Arrays.copyOf(nums, nums.length);
+        Arrays.fill(nums, 0);
+        int j=0;
+        for(int i=0; i<newNums.length; i++) {
+            if(map.containsKey(newNums[i]) && (map.get(newNums[i]) == 2)) {
+                continue;
+            }
+            nums[j++] = newNums[i];
+            map.put(newNums[i], map.getOrDefault(newNums[i], 0) + 1);
+        }
+
+        return j;
+    }
+
+    public static boolean validTriangle(int a, int b, int c) {
+        boolean isValid = ((a+b)>c) && ((c+b)>a) && ((a+c)>b);
+        return isValid;
+    }
+
+    public static int largestPerimeter(int[] nums) {
+        Arrays.sort(nums);
+        int a=0, b=0, c=0;
+        for(int i=nums.length; i>=2; i--) {
+            if(validTriangle(nums[i], nums[i-1], nums[i-2])) {
+                a = nums[i];
+                b = nums[i-1];
+                c = nums[i-2];
+                break;
+            }
+        }
+
+        return a+b+c;
+    }
+
     public static void main(String[] args) {
-        char[][] word = {{'A','B','C','E'}, {'S','F','C','S'}, {'A','D','E','E'}};
-        System.out.println(exist(word, "ABCCED"));
+        System.out.println();
     }
 }
 
-// 912. Sort an Array
-// 1338. Reduce Array Size to The Half
-// 1833. Maximum Ice Cream Bars
+// 3151. Special Array I
