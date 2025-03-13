@@ -76,43 +76,6 @@ public class main {
         return max;
     }
 
-    public static long minCost(int[] arr, int[] brr, long k) {
-        if(Arrays.equals(arr, brr)) {
-            return 0;
-        }
-
-        long cost = 0;
-        HashMap<Integer, Integer> map = new HashMap<>();
-        List<Integer> list = new ArrayList<>();
-        for(int i=0; i<brr.length; i++) {
-            list.add(brr[i]);
-        }
-
-        for(int i=0; i<arr.length; i++) {
-            int min = Integer.MAX_VALUE;
-            int minIdx = 0;
-            for(int j=0; j<list.size(); j++) {
-                if(min > Math.abs(arr[i]-list.get(j))) {
-                    min = Math.abs(arr[i]-list.get(j));
-                    minIdx = j;
-                }
-            }
-
-            map.put(i, minIdx);
-            list.remove(minIdx);
-            cost += min;
-        }
-
-        for(int key: map.keySet()) {
-            if(key != map.get(key)) {
-                cost += k;
-                break;
-            }
-        }
-
-        return cost;
-    }
-
     public static int removeDuplicates(int[] nums) {
         int[] newNums = new int[nums.length];
         HashMap<Integer, Integer> map = new HashMap<>();
@@ -131,28 +94,59 @@ public class main {
         return j;
     }
 
-    public static boolean validTriangle(int a, int b, int c) {
-        boolean isValid = ((a+b)>c) && ((c+b)>a) && ((a+c)>b);
-        return isValid;
-    }
+    public static int[] closestPrimes(int left, int right) {
+        int[] res = new int[2];
+        boolean[] prime = new boolean[right+1];
 
-    public static int largestPerimeter(int[] nums) {
-        Arrays.sort(nums);
-        int a=0, b=0, c=0;
-        for(int i=nums.length; i>=2; i--) {
-            if(validTriangle(nums[i], nums[i-1], nums[i-2])) {
-                a = nums[i];
-                b = nums[i-1];
-                c = nums[i-2];
-                break;
+        Arrays.fill(prime, true);
+
+        for(int i=2; i*i<=right; i++) {
+            if(prime[i]) {
+                for(int p=i*i; p<=right; p += i) {
+                    prime[p] = false;
+                }
             }
         }
 
-        return a+b+c;
+        prime[1] = false;
+        int leftPr = -1;
+        int rightPr = -1;
+        int currLeft = -1;
+        // int currRight = -1;
+        for(int i=left; i<=right; i++) {
+            if (prime[i] && leftPr == -1) {
+                leftPr = i;
+            } else if (prime[i] && rightPr == -1) {
+                rightPr = i;
+                currLeft = i;
+                if(rightPr - leftPr == 2) break;
+            } else if (prime[i]) {
+                System.out.println(currLeft);
+                System.out.println(">>" + i);
+                if(rightPr - leftPr > i - currLeft) {
+                    leftPr = currLeft;
+                    rightPr = i;
+                    if(rightPr - leftPr == 2) {
+                        System.out.println("here");
+                        break;
+                    }
+                } 
+                currLeft = i;
+                
+            }
+        }
+
+        res[0] = leftPr;
+        res[1] = rightPr;
+        if(rightPr == -1) {
+            res[0] = -1;
+        }
+
+        return res;
     }
 
     public static void main(String[] args) {
-        System.out.println();
+        System.out.println(Arrays.toString(closestPrimes(1852, 2063)));
     }
 }
 
