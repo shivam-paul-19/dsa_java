@@ -145,8 +145,73 @@ public class main {
         return res;
     }
 
+    public static int totalNumbers(int[] digits) {
+        HashSet<Integer> set = new HashSet<>();
+
+        for(int i=0; i<digits.length; i++) {
+            if(digits[i] == 0) continue;
+
+            for(int j=0; j<digits.length; j++) {
+                if(i == j) continue;
+
+                for(int k=0; k<digits.length; k++) {
+                    if(i == k || j == k) continue;
+
+                    int num = digits[i]*100 + digits[j]*10 + digits[k];
+                    if(num%2 == 0) set.add(num);
+                }
+            }
+        }
+
+        return set.size();
+    }
+
+    static class Spreadsheet {
+        HashMap<String, Integer> cells;
+        public Spreadsheet(int rows) {
+            this.cells = new HashMap<>();
+        }
+        
+        public void setCell(String cell, int value) {
+            cells.put(cell, value);
+        }
+        
+        public void resetCell(String cell) {
+            if(cells.containsKey(cell)) {
+                cells.remove(cell);
+            }
+        }
+        
+        public int getValue(String formula) {
+            int plus = formula.indexOf("+");
+            String first = formula.substring(1, plus);
+            String second = formula.substring(plus+1);
+
+            int firstNum = 0;
+            int secondNum = 0;
+
+            if(Character.isDigit(first.charAt(0))) {
+                firstNum = Integer.parseInt(first);
+            } else {
+                firstNum = cells.getOrDefault(first, 0);
+            }
+
+            if(Character.isDigit(second.charAt(0))) {
+                secondNum = Integer.parseInt(second);
+            } else {
+                secondNum = cells.getOrDefault(second, 0);
+            }
+
+            System.out.println(firstNum + " " + secondNum);
+            return firstNum + secondNum;
+        }
+    }
+
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(closestPrimes(1852, 2063)));
+        Spreadsheet s = new Spreadsheet(3);
+        System.out.println(s.getValue("=o126+10272"));
+        s.setCell("A1", 10);
+        System.out.println(s.getValue("=A1+6"));
     }
 }
 
