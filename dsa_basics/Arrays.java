@@ -1,6 +1,22 @@
-import java.util.*;
+import java.util.Scanner;
 
-public class sorting {
+public class Arrays {
+    // traversing
+    public static void display(int[] arr) {
+        for(int i=0; i<arr.length; i++) {
+            System.out.println(arr[i]);
+        }
+
+        // OR
+
+        for(int el: arr) {
+            System.out.println(el);
+        }
+    }
+
+    // Sorting
+
+    // Bubble sort
     public static int[] bubbleSort(int[] arr) {
         for(int i=0; i<arr.length; i++) {
             for(int j=0; j<arr.length-1-i; j++) {
@@ -16,6 +32,7 @@ public class sorting {
         return arr;
     }
 
+    // Selection sort
     public static int[] selectionSort(int[] arr) {
         for(int i=0; i<arr.length; i++) {
             int min = i;
@@ -34,6 +51,7 @@ public class sorting {
         return arr;
     }
 
+    // insertion sort
     public static int[] insertionSort(int[] arr) {
         for(int i=1; i<arr.length; i++) {
             int p = i-1;
@@ -119,8 +137,11 @@ public class sorting {
         merge(arr, si, mid, ei);
     }
 
-    public static int[] mergeSort(int[] nums) {
-        mergeSortUtil(nums, 0, nums.length-1);
-        return nums;
+    public static void main(String[] args) {
+        // declaring an Array
+        int[] arr = new int[10];    // array of 10 integers
+        // initialising array
+        int[] arr2 = {1,2,3,4,5,6,7,8,9,10};
+        display(arr2);
     }
 }
