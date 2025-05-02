@@ -207,11 +207,52 @@ public class main {
         }
     }
 
+    private static boolean isSymmetric(String n) {
+        int l = n.length();
+        int first = Integer.parseInt(n.substring(0, l/2));
+        int second = Integer.parseInt(n.substring(l/2, l));
+
+        if(l == 2) return first == second;
+
+        int firstSum = first/10 + (first%10);
+        int secondSum = second/10 + (second%10); 
+        return firstSum == secondSum;
+    }
+
+    public static int countSymmetricIntegers(int low, int high) {
+        int count = 0;
+        for(int i=low; i<=high; i++) {
+            if(i<=9 || (i>=100 && i<999) || i == 10000) continue;
+            if(isSymmetric(Integer.toString(i))) count++;
+        }
+
+        return count;
+    }
+
+    public int countLargestGroup(int n) {
+        int[] sums = new int[36];
+        int maxValue = 0;
+        for(int i=1; i<=n; i++) {
+            int num = i;
+            int sum = 0;
+            while(num != 0) {
+                sum += num%10;
+                num /= 10;
+            }
+            sums[sum-1]++;
+            maxValue = Math.max(maxValue, sums[sum-1]);
+        }
+
+        int count = 0;
+        for(int i=0; i<sums.length; i++) {
+            if(sums[i] == maxValue) count++;
+        }
+
+        return count;
+    }
+
     public static void main(String[] args) {
-        Spreadsheet s = new Spreadsheet(3);
-        System.out.println(s.getValue("=o126+10272"));
-        s.setCell("A1", 10);
-        System.out.println(s.getValue("=A1+6"));
+        System.out.println(5/2);
     }
 }
 
