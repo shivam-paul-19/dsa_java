@@ -115,7 +115,7 @@ public class graphs {
         What to do? => ignore it
 
         * Case 3:
-        ~ The destination vertex is visted again and it is noe the parent
+        ~ The destination vertex is visted again and it is not the parent
         What to do? => return true, because there is a cycle in the graph in this case
      */
     public static boolean detectCycleUtil(ArrayList<Edge>[] graph, int curr, boolean[] isVis, int parent) {

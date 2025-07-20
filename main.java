@@ -1,4 +1,6 @@
+import java.math.BigInteger;
 import java.util.*;
+import java.util.Arrays;
 
 public class main {
     //^ For linked list
@@ -229,30 +231,64 @@ public class main {
         return count;
     }
 
-    public int countLargestGroup(int n) {
-        int[] sums = new int[36];
-        int maxValue = 0;
-        for(int i=1; i<=n; i++) {
-            int num = i;
-            int sum = 0;
-            while(num != 0) {
-                sum += num%10;
-                num /= 10;
+    int[][] list = new int[31][10];
+    public void init() {
+        for(int i=0; i<=30; i++) {
+            int n = (int)Math.pow(2, i);
+            while(n!=0) {
+                list[i][n%10]++;
+                n /= 10;
             }
-            sums[sum-1]++;
-            maxValue = Math.max(maxValue, sums[sum-1]);
+        }
+    }
+
+    private long maxProfit(int[] prices, int day, int k, int state, long[][][] dp) {
+        if(day >= prices.length || k == 0) return 0L;
+
+        // memoization
+        if(dp[day][k][state] != -1) return dp[day][k][state];
+
+        // if it is normal day, state 0
+        if(state == 0) {
+            // doing nothing
+            long p1 = maxProfit(prices, day+1, k, 0, dp);
+            // buy one stock
+            long p2 = maxProfit(prices, day+1, k, 1, dp) - prices[day];
+            // sell a stock
+            long p3 = maxProfit(prices, day+1, k, 2, dp) + prices[day];
+            return dp[day][k][state] = Math.max(p1, Math.max(p2, p3));
+        } 
+        // if it is buying day
+        else if(state == 1) {
+            // doing nothing
+            long p1 = maxProfit(prices, day+1, k, state, dp);
+            // sell a stock
+            long p2 = prices[day] + maxProfit(prices, day+1, k-1, 0, dp);
+            return dp[day][k][state] = Math.max(p1, p2);
+        }
+        // if it a selling day
+        else {
+            // doing nothing
+            long p1 = maxProfit(prices, day+1, k, state, dp);
+            // buy one stock
+            long p2 = maxProfit(prices, day+1, k-1, 0, dp) - prices[day];
+            return dp[day][k][state] = Math.max(p1, p2);
+        }
+    }
+
+    public long maximumProfit(int[] prices, int k) {
+        long[][][] dp = new long[prices.length+1][k+1][3];
+        for(long[][] matrix: dp) {
+            for(long[] arr: matrix) {
+                Arrays.fill(arr, -1);
+            }
         }
 
-        int count = 0;
-        for(int i=0; i<sums.length; i++) {
-            if(sums[i] == maxValue) count++;
-        }
-
-        return count;
+        return maxProfit(prices, 0, k, 0, dp);
     }
 
     public static void main(String[] args) {
-        System.out.println(5/2);
+        
     }
 }
 

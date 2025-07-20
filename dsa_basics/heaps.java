@@ -27,7 +27,7 @@ public class heaps {
             System.out.println(arr);
         }
 
-        private void heapify(int idx) {
+        public void heapify(int idx) {
             int left = (2*idx)+1;
             int right = (2*idx)+2;
             int minIdx = idx;
@@ -70,7 +70,7 @@ public class heaps {
     public static void heapSort(int arr[]) {
         int n = arr.length;
         for(int i=n/2; i>=0; i--) {
-            heapify(arr, i, n);
+            heapify(i);
         }
 
         for(int i=n-1; i>=0; i--) {
@@ -78,7 +78,7 @@ public class heaps {
             arr[i] = arr[0];
             arr[0] = temp;
 
-            heapify(arr, 0, i);
+            heapify(i);
         }
     }
 
@@ -93,7 +93,7 @@ public class heaps {
             this.x = x;
             this.y = y;
             this.dis = dis;
-            this.idx - idx;
+            this.idx = idx;
         }
 
         @Override
