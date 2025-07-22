@@ -117,7 +117,7 @@ public class Day2 {
         return -1;
     }
 
-    // not in leetocode
+    // not in leetocode: Repeat and Missing Number
     public int[] findMissingRepeatingNumbers(int[] nums) {
         // we can use a frequence array as we know the range
         int[] freq = new int[nums.length+1];
@@ -139,7 +139,7 @@ public class Day2 {
         return new int[]{two, missing};
     }
 
-    // not in leetcode
+    // not in leetcode: Count Inversions
 
     // merge function for the merge sort (here the modification will occur)
     private long merge(int[] nums, int start, int mid, int end) {
