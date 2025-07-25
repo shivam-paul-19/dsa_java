@@ -112,7 +112,7 @@ public class Day7 {
                     list.add(nums[k]);
                     Collections.sort(list);
                     set.add(new ArrayList<>(list));
-                    list.clear();
+                    list.clear();   // clear the list
                     j++;
                     k--;
                 } else if(sum < 0) {
