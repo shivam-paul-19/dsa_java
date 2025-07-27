@@ -104,6 +104,7 @@ public class Day8 {
         return new int[]{j, maxProfit};
     }
 
+    // Not in Leetcode: Fractional Knapsack
     public double fractionalKnapsack(int[] val, int[] wt, long cap) {
         // we will make n by 3, 2D matrix
         // matrix[i][0] -> val, matrix[i][1] -> wt, matrix[i][2] -> val/wt (value per 1 unit of wt) 
@@ -133,10 +134,11 @@ public class Day8 {
             i++;
         }
 
-        return profit;
+        return Math.round(profit * 1e6) / 1e6;
     }
 
     // Not in leetcode: Minimum coins
+    // Note that greedy algo will not always work, here the test cases must be to teach gready but later on it will be better to apply DP in it.
     public int MinimumCoins(int[] coins, int amount) {
         // we will sort the coins
         Arrays.sort(coins);

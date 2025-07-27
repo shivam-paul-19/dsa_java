@@ -7,10 +7,15 @@ public class Day6 {
     public class ListNode {
         int val;
         ListNode next;
+        ListNode child;     // for last question only
         ListNode() {}
+
         ListNode(int val) { 
             this.val = val; 
+            this.next = null;
+            this.child = null;
         }
+
         ListNode(int val, ListNode next) { 
             this.val = val; 
             this.next = next; 
@@ -57,8 +62,43 @@ public class Day6 {
 
         return false;   // fast reached end, no cycle
     }
-
-    // Leetcode Q: 
+    
+    // leetcode Q: 25. Reverse Nodes in k-Group
+    public ListNode reverseKGroup(ListNode head, int k) {
+        // first let us count the number of nodes
+        int count = 0;
+        ListNode temp = head;
+        while(temp != null) {
+            count++;
+            temp = temp.next;
+        }
+        
+        // now reverse every group of k nodes
+        // but first make dummy node before head
+        ListNode dummy = new ListNode(0, head);
+        ListNode prev = dummy;
+        ListNode curr = dummy;
+        ListNode next = dummy;
+        
+        while(count >= k) {
+            curr = prev.next;
+            next = curr.next;
+            
+            for(int i=1; i<k; i++) {
+                curr.next = next.next;
+                next.next = prev.next;
+                prev.next = next;
+                next = curr.next;
+            }
+            
+            prev = curr;
+            count -= k;     // decrement count by k
+        }
+        
+        return dummy.next;  // discard the dummy node
+    }
+    
+    // Leetcode Q: 234. Palindrome Linked List
 
     // helper function of reverse
     private ListNode reverse(ListNode head) {
@@ -82,10 +122,10 @@ public class Day6 {
 
     public boolean isPalindrome(ListNode head) {
         if(head == null || head.next == null) return true;  // edge case
-
+        
         // just make a copy of the Linked list and reverse that copy
         // if the reversed copy is same as original then it's a palindrome
-
+        
         ListNode copy = new ListNode();
         ListNode copyTemp = copy;
         ListNode temp = head;
@@ -142,5 +182,43 @@ public class Day6 {
         }
 
         return null;
+    }
+
+    // Not in Leetcode: Flattening of LL
+    
+    private ListNode merge(ListNode a, ListNode b) {
+        ListNode res = new ListNode(0);
+        ListNode temp = res;
+
+        while(a != null && b != null) {
+            if(a.val < b.val) {
+                temp.child = new ListNode(a.val);
+                a = a.child;
+            } else {
+                temp.child = new ListNode(b.val);
+                b = b.child;
+            }
+            temp = temp.child;
+        }
+
+        if (a != null) temp.child = a;
+        else temp.child = b;
+
+        return res.child;
+    }
+
+    public ListNode flattenLinkedList(ListNode head) {
+        // all the child lists are sorted, we can perform merge to them
+
+        // base case
+        if(head == null || head.next == null) return head;
+
+        // recursive call
+        head.next = flattenLinkedList(head.next);
+
+        // now merge them
+        head = merge(head, head.next);
+
+        return head;
     }
 }
