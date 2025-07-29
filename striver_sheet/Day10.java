@@ -226,7 +226,7 @@ public class Day10 {
             visited[row][col-1] = false;
         }
 
-        // rigth
+        // right
         if(col+1 < grid[0].length && grid[row][col+1] == 1 && !visited[row][col+1]) {
             visited[row][col+1] = true;
             findPathUtil(grid, visited, row, col+1, paths, path + 'R');
