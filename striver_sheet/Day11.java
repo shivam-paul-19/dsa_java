@@ -12,7 +12,7 @@ public class Day11 {
 
         while(low <= high) {
             int mid = (low + high)/2;
-            int power = (int)Math.pow(mid, N);
+            long power = (long)Math.pow(mid, N);
 
             if(power == M) {
                 // if root found then return it
@@ -30,7 +30,7 @@ public class Day11 {
     // not in leetcode: Matrix median
     private int upperBound(int n, int[] arr) {
         int low = 0;
-        int high = n-1;
+        int high = arr.length-1;
 
         while(low <= high) {
             int mid = (low+high)/2;
@@ -278,8 +278,8 @@ public class Day11 {
         while(low <= high) {
             int mid = (low+high)/2;
 
-            if(allocateBooks(nums, mid) >= m) {
-                // if can allocate more than or eq to m students, then increase the number
+            if(allocateBooks(nums, mid) > m) {
+                // if can allocate more than m students, then increase the number
                 low = mid + 1;
             } else {
                 high = mid - 1;
