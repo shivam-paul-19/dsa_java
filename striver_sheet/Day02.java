@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class Day2 {
+public class Day02 {
     // Leetcode Q: 48. Rotate Image
     public void rotate(int[][] matrix) {
         // we have to rotate the matrix in clockwise

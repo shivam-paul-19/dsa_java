@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class Day3 {
+public class Day03 {
     // Leetcode Q: 74. Search a 2D Matrix
     public boolean searchMatrix(int[][] matrix, int target) {
         // one thing given to us is that the matrix is sorted in ascending order

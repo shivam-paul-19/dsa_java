@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class Day1 {
+public class Day01 {
 
     // Leetcode Q: 73. Set Matrix Zeros
     public void setZeroes(int[][] matrix) {

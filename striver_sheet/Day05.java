@@ -1,6 +1,6 @@
 // Day 5: Linked Lists
 
-public class Day5 {
+public class Day05 {
     // defining ListNode class for Linked Lists
     public class ListNode {
         int val;

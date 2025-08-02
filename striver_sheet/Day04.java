@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class Day4 {
+public class Day04 {
     // leetcode Q: 1. Two sum
     public int[] twoSum(int[] nums, int target) {
         // we can use a hashmap to make it an optimised approach

@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class Day9 {
+public class Day09 {
     // Not in Leetcode: Subset sum equals to target
 
     // helper recursive function

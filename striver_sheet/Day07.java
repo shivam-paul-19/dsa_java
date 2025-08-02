@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class Day7 {
+public class Day07 {
     // defining ListNode class for Linked Lists
     public class ListNode {
         int val;

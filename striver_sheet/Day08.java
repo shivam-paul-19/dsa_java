@@ -2,7 +2,7 @@
 
 import java.util.*;
 
-public class Day8 {
+public class Day08 {
     // Not in Leetcode: N meetings in one room
     public int maxMeetings(int[] start, int[] end) {
         // lets make a 2D array of starting and ending time of the meetings
